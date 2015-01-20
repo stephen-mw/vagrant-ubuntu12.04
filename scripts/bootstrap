@@ -1,0 +1,30 @@
+#!/bin/bash
+set -e
+
+# Remove old packages, which can cause hash mis-matches
+rm -r -- /var/lib/apt/lists/*
+apt-get clean -y
+apt-get update -y
+
+# Add the insecure vagrant key. This will be replaced on the first highstate
+# with a new key
+mkdir -p /home/vagrant/.ssh
+cat > /home/vagrant/.ssh/authorized_keys <<VAGRANT_KEY
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
+VAGRANT_KEY
+chown -R vagrant.vagrant /home/vagrant
+
+mkdir /vagrant
+
+# Disable Vagrant's password
+passwd -l vagrant
+
+# Add a message regarding when and how this image was built
+cat > /etc/motd.tail <<MOTD
+This image was built $(date).
+
+To find out more about how this image was created, visit:
+
+  https://github.com/stephen-mw/vagrant-ubuntu12.04
+
+MOTD
