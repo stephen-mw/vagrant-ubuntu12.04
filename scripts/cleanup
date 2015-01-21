@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+# Cleanup all of our dangling installation files
+apt-get clean -y
+apt-get autoremove -y
+
+rm -r -- /var/lib/apt/lists/*
+rm -r -- /tmp/*
+rm -r -- /var/cache/apt/*
+rm -r -- /var/log/*
+
+history -c 

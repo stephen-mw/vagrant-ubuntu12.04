@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+BOX_FILE='packer_virtualbox-iso_virtualbox.box'
+VAGRANT_NAME='precise64'
+
+export PACKER_LOG=1
+
+test -f $BOX_FILE && rm -f $BOX_FILE
+
+packer build -only virtualbox-iso ubuntu_12.04.json
+
+vagrant box remove ${VAGRANT_NAME} || true
+vagrant box add ${VAGRANT_NAME} $BOX_FILE
+
+mv ${BOX_FILE} ${VAGRANT_NAME}.box

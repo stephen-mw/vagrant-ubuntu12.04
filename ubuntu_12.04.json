@@ -1,0 +1,47 @@
+{
+    "provisioners": [
+        {
+            "override": {
+                "virtualbox-iso": {
+                    "execute_command": "sudo {{ .Path }}"
+                }
+            },
+            "scripts": [
+                "scripts/bootstrap",
+                "scripts/install_vbox_additions",
+                "scripts/cleanup"
+            ],
+            "type": "shell"
+        }
+    ],
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "boot_command": [
+                "<esc><esc><enter><wait>",
+                "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+                "debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
+                "hostname=precise64 <wait>",
+                "fb=false debconf/frontend=noninteractive <wait>",
+                "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false <wait>",
+                "initrd=/install/initrd.gz -- <enter><wait>"
+            ],
+            "boot_wait": "4s",
+            "guest_additions_mode": "disable",
+            "guest_os_type": "Ubuntu_64",
+            "headless": false,
+            "http_directory": "scripts",
+            "iso_checksum": "af224223de99e2a730b67d7785b657f549be0d63221188e105445f75fb8305c9",
+            "iso_checksum_type": "sha256",
+            "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.5-server-amd64.iso",
+            "shutdown_command": "sudo shutdown -h now",
+            "ssh_password": "vagrant",
+            "ssh_port": 22,
+            "ssh_username": "vagrant",
+            "ssh_wait_timeout": "10000s"
+        }
+    ],
+    "post-processors": [
+        "vagrant"
+    ]
+}
