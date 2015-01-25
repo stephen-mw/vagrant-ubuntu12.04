@@ -16,6 +16,7 @@
     ],
     "builders": [
         {
+            "disk_size": 10000,
             "type": "virtualbox-iso",
             "boot_command": [
                 "<esc><esc><enter><wait>",
@@ -41,7 +42,8 @@
             "ssh_wait_timeout": "10000s"
         }
     ],
-    "post-processors": [
-        "vagrant"
-    ]
+    "post-processors": [{
+        "output": "precise64.box",
+        "type": "vagrant"
+    }]
 }
