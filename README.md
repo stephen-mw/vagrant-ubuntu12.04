@@ -31,7 +31,7 @@ Once the installer starts running, it will fire up virtualbox and take care of e
 
 ![Packer installing Ubuntu via Virtualbox](http://i.imgur.com/wpanrAt.png)
 
-The installer will download the image, bootstrap it, then export a virtualbox image. This last box file is what you can share with others or use yourself.
+The installer will download the image, bootstrap it, then export a virtualbox image. This last box file is what you can share with others or use yourself. It will even install a specific version of virtualbox guest additions.
 
 The preseed.cfg and scripts will do everything in an automated and predictable way.
  Feel free to fork and make whatever changes you want.
