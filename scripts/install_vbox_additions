@@ -29,4 +29,4 @@ rm VBoxGuestAdditions_${VERSION}.iso
 umount /media/VBoxGuestAdditions
 rmdir /media/VBoxGuestAdditions
 
-apt-get remove --purge $PACKAGES
+apt-get remove -y --purge $PACKAGES
